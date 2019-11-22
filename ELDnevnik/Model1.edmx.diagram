@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cfb4b350f9fd46038507aa7cf7bfd977" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="user6Model.Класс" Width="1.5" PointX="4" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Классы_преподователей" Width="1.5" PointX="6.375" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Оценки" Width="4" PointX="11.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Пользователь" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Предмет" Width="1.5" PointX="6.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Преподователь" Width="1.5" PointX="1.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user6Model.Ученик" Width="1.5" PointX="2.875" PointY="6.5" IsExpanded="true" />
+        <AssociationConnector Association="user6Model.FK_Классы_преподователей_Класс" ManuallyRouted="false" />
+        <AssociationConnector Association="user6Model.FK_Ученик_Класс" ManuallyRouted="false" />
+        <AssociationConnector Association="user6Model.FK_Классы_преподователей_Предмет" ManuallyRouted="false" />
+        <AssociationConnector Association="user6Model.FK_Классы_преподователей_Преподователь" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="user6Model.FK_Оценки_Классы_преподователей" ManuallyRouted="false" />
+        <AssociationConnector Association="user6Model.FK_Оценки_Ученик" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="user6Model.FK_Преподователь_Пользователь" ManuallyRouted="false" />
+        <AssociationConnector Association="user6Model.FK_Ученик_Пользователь" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

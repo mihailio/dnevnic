@@ -1,0 +1,19 @@
+﻿<Window x:Class="ELDnevnik.Registr"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELDnevnik"
+        mc:Ignorable="d"
+        Title="Регистрация" Height="236.975" Width="304.622">
+    <Grid>
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="51,35,0,0" VerticalAlignment="Top"/>
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="51,83,0,0" VerticalAlignment="Top"/>
+        <Label Content="Роль" HorizontalAlignment="Left" Margin="51,124,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="reg_login" HorizontalAlignment="Left" Height="23" Margin="107,39,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="reg_pass" HorizontalAlignment="Left" Height="23" Margin="107,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="rol" HorizontalAlignment="Left" Margin="107,124,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Button Content="Регистрация" HorizontalAlignment="Left" Margin="107,163,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,25 @@
+﻿<Window x:Class="ELDnevnik.Student"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELDnevnik"
+        mc:Ignorable="d"
+        Title="Student" Height="450" Width="338.854">
+    <Grid>
+        <ComboBox x:Name="cb_predmet" HorizontalAlignment="Left" Margin="13,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="cb_mesiyc" HorizontalAlignment="Left" Margin="138,58,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Предмет" HorizontalAlignment="Left" Margin="17,32,0,0" VerticalAlignment="Top"/>
+        <Label Content="Месяц" HorizontalAlignment="Left" Margin="138,32,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbllogin" Content="Логин?" HorizontalAlignment="Left" Margin="17,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.027,0.131"/>
+        <DataGrid HorizontalAlignment="Left" Height="299" Margin="17,110,0,0" VerticalAlignment="Top" Width="116">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Дата"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Оценка"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="Button_on" Content="Просмотреть оценки
+                " HorizontalAlignment="Left" Margin="138,110,0,0" VerticalAlignment="Top" Width="125" Click="Button_on_Click"/>
+
+    </Grid>
+</Window>

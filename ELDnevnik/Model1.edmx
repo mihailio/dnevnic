@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище user6Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Класс">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Классы преподователей">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ИД_Преподователь" Type="int" />
+          <Property Name="ИД_Класс" Type="int" Nullable="false" />
+          <Property Name="ИД_Предмет" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ученик" Type="int" Nullable="false" />
+          <Property Name="Препод_Предмет" Type="int" Nullable="false" />
+          <Property Name="Оценка" Type="int" Nullable="false" />
+          <Property Name="Вид_Оценки" Type="int" Nullable="false" />
+          <Property Name="Дата" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="Логин" />
+          </Key>
+          <Property Name="Логин" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Роль" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Предмет">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Преподователь">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ФИО" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ученик">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ФИО" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Класс" Type="int" />
+        </EntityType>
+        <Association Name="FK_Классы преподователей_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="1" />
+          <End Role="Классы преподователей" Type="Self.Классы преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы преподователей">
+              <PropertyRef Name="ИД_Класс" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Классы преподователей_Предмет">
+          <End Role="Предмет" Type="Self.Предмет" Multiplicity="1" />
+          <End Role="Классы преподователей" Type="Self.Классы преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Предмет">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы преподователей">
+              <PropertyRef Name="ИД_Предмет" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Классы преподователей_Преподователь">
+          <End Role="Преподователь" Type="Self.Преподователь" Multiplicity="0..1" />
+          <End Role="Классы преподователей" Type="Self.Классы преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Преподователь">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы преподователей">
+              <PropertyRef Name="ИД_Преподователь" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Классы преподователей">
+          <End Role="Классы преподователей" Type="Self.Классы преподователей" Multiplicity="1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Классы преподователей">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Препод_Предмет" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Ученик">
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ученик">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Ученик" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Преподователь_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Преподователь" Type="Self.Преподователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Логин" />
+            </Principal>
+            <Dependent Role="Преподователь">
+              <PropertyRef Name="Логин" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ученик_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="0..1" />
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Ученик">
+              <PropertyRef Name="Класс" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ученик_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Логин" />
+            </Principal>
+            <Dependent Role="Ученик">
+              <PropertyRef Name="Логин" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище user6ModelContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Класс" EntityType="Self.Класс" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Классы преподователей" EntityType="Self.Классы преподователей" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Предмет" EntityType="Self.Предмет" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Преподователь" EntityType="Self.Преподователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ученик" EntityType="Self.Ученик" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Классы преподователей_Класс" Association="Self.FK_Классы преподователей_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Классы преподователей" EntitySet="Классы преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Классы преподователей_Предмет" Association="Self.FK_Классы преподователей_Предмет">
+            <End Role="Предмет" EntitySet="Предмет" />
+            <End Role="Классы преподователей" EntitySet="Классы преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Классы преподователей_Преподователь" Association="Self.FK_Классы преподователей_Преподователь">
+            <End Role="Преподователь" EntitySet="Преподователь" />
+            <End Role="Классы преподователей" EntitySet="Классы преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Классы преподователей" Association="Self.FK_Оценки_Классы преподователей">
+            <End Role="Классы преподователей" EntitySet="Классы преподователей" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Ученик" Association="Self.FK_Оценки_Ученик">
+            <End Role="Ученик" EntitySet="Ученик" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Преподователь_Пользователь" Association="Self.FK_Преподователь_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Преподователь" EntitySet="Преподователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ученик_Класс" Association="Self.FK_Ученик_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Ученик" EntitySet="Ученик" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ученик_Пользователь" Association="Self.FK_Ученик_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Ученик" EntitySet="Ученик" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="user6Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Класс">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Классы_преподователей" Relationship="Self.FK_Классы_преподователей_Класс" FromRole="Класс" ToRole="Классы_преподователей" />
+          <NavigationProperty Name="Ученик" Relationship="Self.FK_Ученик_Класс" FromRole="Класс" ToRole="Ученик" />
+        </EntityType>
+        <EntityType Name="Классы_преподователей">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ИД_Преподователь" Type="Int32" />
+          <Property Name="ИД_Класс" Type="Int32" Nullable="false" />
+          <Property Name="ИД_Предмет" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Класс" Relationship="Self.FK_Классы_преподователей_Класс" FromRole="Классы_преподователей" ToRole="Класс" />
+          <NavigationProperty Name="Предмет" Relationship="Self.FK_Классы_преподователей_Предмет" FromRole="Классы_преподователей" ToRole="Предмет" />
+          <NavigationProperty Name="Преподователь" Relationship="Self.FK_Классы_преподователей_Преподователь" FromRole="Классы_преподователей" ToRole="Преподователь" />
+          <NavigationProperty Name="Оценки" Relationship="Self.FK_Оценки_Классы_преподователей" FromRole="Классы_преподователей" ToRole="Оценки" />
+        </EntityType>
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ученик" Type="Int32" Nullable="false" />
+          <Property Name="Препод_Предмет" Type="Int32" Nullable="false" />
+          <Property Name="Оценка" Type="Int32" Nullable="false" />
+          <Property Name="Вид_Оценки" Type="Int32" Nullable="false" />
+          <Property Name="Дата" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Классы_преподователей" Relationship="Self.FK_Оценки_Классы_преподователей" FromRole="Оценки" ToRole="Классы_преподователей" />
+          <NavigationProperty Name="Ученик1" Relationship="Self.FK_Оценки_Ученик" FromRole="Оценки" ToRole="Ученик" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="Логин" />
+          </Key>
+          <Property Name="Логин" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Роль" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Преподователь" Relationship="Self.FK_Преподователь_Пользователь" FromRole="Пользователь" ToRole="Преподователь" />
+          <NavigationProperty Name="Ученик" Relationship="Self.FK_Ученик_Пользователь" FromRole="Пользователь" ToRole="Ученик" />
+        </EntityType>
+        <EntityType Name="Предмет">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Классы_преподователей" Relationship="Self.FK_Классы_преподователей_Предмет" FromRole="Предмет" ToRole="Классы_преподователей" />
+        </EntityType>
+        <EntityType Name="Преподователь">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Логин" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ФИО" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Классы_преподователей" Relationship="Self.FK_Классы_преподователей_Преподователь" FromRole="Преподователь" ToRole="Классы_преподователей" />
+          <NavigationProperty Name="Пользователь" Relationship="Self.FK_Преподователь_Пользователь" FromRole="Преподователь" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Ученик">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Логин" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ФИО" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Класс" Type="Int32" />
+          <NavigationProperty Name="Класс1" Relationship="Self.FK_Ученик_Класс" FromRole="Ученик" ToRole="Класс" />
+          <NavigationProperty Name="Оценки" Relationship="Self.FK_Оценки_Ученик" FromRole="Ученик" ToRole="Оценки" />
+          <NavigationProperty Name="Пользователь" Relationship="Self.FK_Ученик_Пользователь" FromRole="Ученик" ToRole="Пользователь" />
+        </EntityType>
+        <Association Name="FK_Классы_преподователей_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="1" />
+          <End Role="Классы_преподователей" Type="Self.Классы_преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы_преподователей">
+              <PropertyRef Name="ИД_Класс" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ученик_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="0..1" />
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Ученик">
+              <PropertyRef Name="Класс" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Классы_преподователей_Предмет">
+          <End Role="Предмет" Type="Self.Предмет" Multiplicity="1" />
+          <End Role="Классы_преподователей" Type="Self.Классы_преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Предмет">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы_преподователей">
+              <PropertyRef Name="ИД_Предмет" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Классы_преподователей_Преподователь">
+          <End Role="Преподователь" Type="Self.Преподователь" Multiplicity="0..1" />
+          <End Role="Классы_преподователей" Type="Self.Классы_преподователей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Преподователь">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Классы_преподователей">
+              <PropertyRef Name="ИД_Преподователь" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Классы_преподователей">
+          <End Role="Классы_преподователей" Type="Self.Классы_преподователей" Multiplicity="1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Классы_преподователей">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Препод_Предмет" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Оценки_Ученик">
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="1" />
+          <End Role="Оценки" Type="Self.Оценки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ученик">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Оценки">
+              <PropertyRef Name="Ученик" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Преподователь_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Преподователь" Type="Self.Преподователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Логин" />
+            </Principal>
+            <Dependent Role="Преподователь">
+              <PropertyRef Name="Логин" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ученик_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Ученик" Type="Self.Ученик" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Логин" />
+            </Principal>
+            <Dependent Role="Ученик">
+              <PropertyRef Name="Логин" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Класс" EntityType="Self.Класс" />
+          <EntitySet Name="Классы_преподователей" EntityType="Self.Классы_преподователей" />
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" />
+          <EntitySet Name="Предмет" EntityType="Self.Предмет" />
+          <EntitySet Name="Преподователь" EntityType="Self.Преподователь" />
+          <EntitySet Name="Ученик" EntityType="Self.Ученик" />
+          <AssociationSet Name="FK_Классы_преподователей_Класс" Association="Self.FK_Классы_преподователей_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Классы_преподователей" EntitySet="Классы_преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ученик_Класс" Association="Self.FK_Ученик_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Ученик" EntitySet="Ученик" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Классы_преподователей_Предмет" Association="Self.FK_Классы_преподователей_Предмет">
+            <End Role="Предмет" EntitySet="Предмет" />
+            <End Role="Классы_преподователей" EntitySet="Классы_преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Классы_преподователей_Преподователь" Association="Self.FK_Классы_преподователей_Преподователь">
+            <End Role="Преподователь" EntitySet="Преподователь" />
+            <End Role="Классы_преподователей" EntitySet="Классы_преподователей" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Классы_преподователей" Association="Self.FK_Оценки_Классы_преподователей">
+            <End Role="Классы_преподователей" EntitySet="Классы_преподователей" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Оценки_Ученик" Association="Self.FK_Оценки_Ученик">
+            <End Role="Ученик" EntitySet="Ученик" />
+            <End Role="Оценки" EntitySet="Оценки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Преподователь_Пользователь" Association="Self.FK_Преподователь_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Преподователь" EntitySet="Преподователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ученик_Пользователь" Association="Self.FK_Ученик_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Ученик" EntitySet="Ученик" />
+          </AssociationSet>
+          </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user6ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="user6Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Класс">
+            <EntityTypeMapping TypeName="user6Model.Класс">
+              <MappingFragment StoreEntitySet="Класс">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Классы_преподователей">
+            <EntityTypeMapping TypeName="user6Model.Классы_преподователей">
+              <MappingFragment StoreEntitySet="Классы преподователей">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="ИД_Преподователь" ColumnName="ИД_Преподователь" />
+                <ScalarProperty Name="ИД_Класс" ColumnName="ИД_Класс" />
+                <ScalarProperty Name="ИД_Предмет" ColumnName="ИД_Предмет" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Оценки">
+            <EntityTypeMapping TypeName="user6Model.Оценки">
+              <MappingFragment StoreEntitySet="Оценки">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Ученик" ColumnName="Ученик" />
+                <ScalarProperty Name="Препод_Предмет" ColumnName="Препод_Предмет" />
+                <ScalarProperty Name="Оценка" ColumnName="Оценка" />
+                <ScalarProperty Name="Вид_Оценки" ColumnName="Вид_Оценки" />
+                <ScalarProperty Name="Дата" ColumnName="Дата" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователь">
+            <EntityTypeMapping TypeName="user6Model.Пользователь">
+              <MappingFragment StoreEntitySet="Пользователь">
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Роль" ColumnName="Роль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Предмет">
+            <EntityTypeMapping TypeName="user6Model.Предмет">
+              <MappingFragment StoreEntitySet="Предмет">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Преподователь">
+            <EntityTypeMapping TypeName="user6Model.Преподователь">
+              <MappingFragment StoreEntitySet="Преподователь">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ученик">
+            <EntityTypeMapping TypeName="user6Model.Ученик">
+              <MappingFragment StoreEntitySet="Ученик">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+                <ScalarProperty Name="Класс" ColumnName="Класс" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
